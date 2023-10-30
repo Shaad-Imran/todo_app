@@ -1,0 +1,47 @@
+/* Reset and basic styling */
+*,
+*::after,
+*::before {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Define color variables for reusability */
+:root {
+  --primaryPurple: #646ff0; /* Define your primary brand color */
+  --black-1: #646681; /* Define shades of black */
+  --black-2: #585858;
+  --bg-1: #f8f8ff; /* Define background colors */
+  --bg-2: #ecedf6;
+  --bg-3: #cccdde;
+  --gray-1: #eee; /* Define shades of gray */
+  --gray-2: #dedfe1;
+  --black: black; /* Define black and white colors for easy reference */
+  --white: white;
+}
+
+/* Set a consistent base font size for easier scaling */
+html {
+  font-size: 10px;
+}
+
+/* Global styling for the entire page */
+body {
+  font-family: "Poppins", sans-serif; /* Set the default font for the entire page */
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--bg-1);
+}
+
+/* Apply the same font family to all elements for consistency */
+* {
+  font-family: "Poppins", sans-serif;
+}
+
+/* Create a container class for central content alignment and maximum width */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
