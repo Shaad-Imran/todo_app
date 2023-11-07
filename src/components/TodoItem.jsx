@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
+import { useEffect, useState } from "react";
 import { format } from "date-fns/esm";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import styles from "../styles/modules/todoitem.module.scss";
 import { getClasses } from "../utils/getClasses";
 import { MdDelete, MdEdit } from "react-icons/md";
@@ -20,10 +20,15 @@ const child = {
 };
 
 const TodoItem = ({ todo }) => {
+  // State to track if the todo item is checked
   const [checked, setChecked] = useState(false);
+
+  // State to control the update modal's visibility
   const [updateModalOpen, setUpdateModalOpen] = useState(false);
+
   const dispatch = useDispatch();
 
+  // Effect to update the checked state when todo status changes
   useEffect(() => {
     if (todo.status === "complete") {
       setChecked(true);
@@ -32,23 +37,29 @@ const TodoItem = ({ todo }) => {
     }
   }, [todo.status]);
 
-  const handleDelete = (id) => {
-    dispatch(deleteTodo(id));
+  // Handler for deleting the todo item
+  const handleDelete = () => {
+    dispatch(deleteTodo(todo.id));
     toast.success("Todo Deleted Successfully");
   };
+
+  // Handler for opening the update modal
   const handleUpdate = () => {
     setUpdateModalOpen(true);
   };
 
+  // Handler for toggling the todo item's checked state
   const handleCheck = () => {
-    setChecked(!checked);
-    dispatch(
-      updateTodo({
-        ...todo,
-        status: checked ? "incomplete" : "complete",
-      })
-    );
+    // Toggle the checked state
+    setChecked((prevChecked) => !prevChecked);
+
+    // Determine the new status based on the checked state
+    const newStatus = checked ? "incomplete" : "complete";
+
+    // Dispatch an update to the todo item's status
+    dispatch(updateTodo({ ...todo, status: newStatus }));
   };
+
   return (
     <>
       <motion.div className={styles.item} variants={child}>
@@ -75,8 +86,8 @@ const TodoItem = ({ todo }) => {
         <div className={styles.todoActions}>
           <div
             className={styles.icon}
-            onClick={() => handleDelete(todo.id)}
-            onKeyDown={() => handleDelete(todo.id)}
+            onClick={() => handleDelete()}
+            onKeyDown={() => handleDelete()}
             role="button"
             tabIndex={0}
           >

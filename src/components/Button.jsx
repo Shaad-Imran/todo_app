@@ -3,6 +3,7 @@ import styles from "../styles/modules/button.module.scss";
 import { getClasses } from "../utils/getClasses";
 
 const Button = ({ children, variant = "primary", type, ...rest }) => {
+  // Generate the CSS class for the button variant
   const buttonTypeClass = styles[`button--${variant}`];
 
   return (
@@ -16,7 +17,7 @@ const Button = ({ children, variant = "primary", type, ...rest }) => {
   );
 };
 
-export const SelectButton = ({ children, id, ...rest }) => {
+const SelectButton = ({ children, id, ...rest }) => {
   return (
     <select
       id={id}
@@ -28,4 +29,4 @@ export const SelectButton = ({ children, id, ...rest }) => {
   );
 };
 
-export default Button;
+export { Button, SelectButton };

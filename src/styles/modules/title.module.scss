@@ -1,4 +1,5 @@
 @import "../mixins";
+
 .title {
   display: inline-block;
   width: 100%;
@@ -11,6 +12,8 @@
   margin-top: 2rem;
   margin-bottom: 1.5rem;
   color: var(--black-1);
+
+  // Use the smallDeviceSize mixin
   @include smallDeviceSize {
     font-size: 3rem;
   }

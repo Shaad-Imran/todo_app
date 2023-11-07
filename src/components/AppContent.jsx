@@ -3,6 +3,7 @@ import styles from "../styles/modules/app.module.scss";
 import TodoItem from "./TodoItem";
 import { AnimatePresence, motion } from "framer-motion";
 
+// Animation variants for the container
 const container = {
   hidden: { opacity: 1 },
   visible: {
@@ -14,6 +15,7 @@ const container = {
   },
 };
 
+// Animation variants for individual children
 const child = {
   hidden: { y: 20, opacity: 0 },
   visible: {
@@ -23,15 +25,17 @@ const child = {
 };
 
 const AppContent = () => {
+  // Retrieve the todo list from the Redux store
   const todoList = useSelector((store) => store.todo.todoList);
-  // console.log(todoList);
 
+  // Retrieve the filter status from the Redux store
   const filterStatus = useSelector((store) => store.todo.filterStatus);
 
+  // Sort the todo list by time (newest first)
   const sortedTodoList = [...todoList];
   sortedTodoList.sort((a, b) => new Date(b.time) - new Date(a.time));
-  // console.log(sortedTodoList);
 
+  // Filter the todo list based on the selected filter status
   const filteredTodoList = sortedTodoList.filter((item) => {
     if (filterStatus === "all") {
       return true;
@@ -40,6 +44,7 @@ const AppContent = () => {
   });
 
   return (
+    // Apply motion animation to the content wrapper
     <motion.div
       className={styles.content__wrapper}
       variants={container}
@@ -47,6 +52,7 @@ const AppContent = () => {
       animate="visible"
     >
       <AnimatePresence>
+        {/* Render todo items or display a message if no todos are available */}
         {filteredTodoList && filteredTodoList.length > 0 ? (
           filteredTodoList.map((todo) => <TodoItem key={todo.id} todo={todo} />)
         ) : (

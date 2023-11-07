@@ -6,14 +6,19 @@ import { Toaster } from "react-hot-toast";
 
 const App = () => {
   return (
-    <>
-      <div className="container">
-        <PageTitle>TODO List</PageTitle>
-        <div className={styles.app__wrapper}>
-          <AppHeader />
-          <AppContent />
-        </div>
+    <div className="container">
+      {/* Page title component */}
+      <PageTitle>TODO List</PageTitle>
+
+      <div className={styles.app__wrapper}>
+        {/* App header component */}
+        <AppHeader />
+
+        {/* App content component */}
+        <AppContent />
       </div>
+
+      {/* Toast notifications for displaying messages */}
       <Toaster
         position="bottom-right"
         toastOptions={{
@@ -22,7 +27,7 @@ const App = () => {
           },
         }}
       />
-    </>
+    </div>
   );
 };
 

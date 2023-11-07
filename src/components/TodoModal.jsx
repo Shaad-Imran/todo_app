@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
-import styles from "../styles/modules/modal.module.scss";
-import { AnimatePresence, motion } from "framer-motion";
-import { MdOutlineClose } from "react-icons/md";
-import Button from "./Button";
 import { useEffect, useState } from "react";
+import { format } from "date-fns/esm";
+import { motion, AnimatePresence } from "framer-motion";
+import styles from "../styles/modules/modal.module.scss";
+import { MdOutlineClose } from "react-icons/md";
+import { Button } from "./Button";
 import { useDispatch } from "react-redux";
 import { addTodo, updateTodo } from "../slices/todoSlice";
 import { v4 as uuid } from "uuid";
 import toast from "react-hot-toast";
 
+// Animation variants for modal and its components
 const dropIn = {
   hidden: {
     opacity: 0,
@@ -31,11 +33,15 @@ const dropIn = {
 };
 
 const TodoModal = ({ type, modalOpen, setModalOpen, todo }) => {
+  // State to store the title input
   const [title, setTitle] = useState("");
+
+  // State to store the status (incomplete/complete) of the task
   const [status, setStatus] = useState("incomplete");
 
   const dispatch = useDispatch();
 
+  // Update the title and status when the type or todo prop changes
   useEffect(() => {
     if (type === "update" && todo) {
       setTitle(todo.title);
@@ -46,6 +52,7 @@ const TodoModal = ({ type, modalOpen, setModalOpen, todo }) => {
     }
   }, [type, todo, modalOpen]);
 
+  // Handle Form Submission
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -61,11 +68,10 @@ const TodoModal = ({ type, modalOpen, setModalOpen, todo }) => {
             id: uuid(),
             title,
             status,
-            time: new Date().toLocaleString(),
+            time: format(new Date(), "p, MM/dd/yyyy"),
           })
         );
         toast.success("Task Added Successfully");
-        setModalOpen(false);
       }
       if (type === "update") {
         if (todo.title !== title || todo.status !== status) {
@@ -76,12 +82,13 @@ const TodoModal = ({ type, modalOpen, setModalOpen, todo }) => {
               status,
             })
           );
-          toast.success("Task Added Successfully");
-          setModalOpen(false);
+          toast.success("Task Updated Successfully");
         } else {
           toast.error("No Changes Made");
+          return;
         }
       }
+      setModalOpen(false);
     }
   };
 
@@ -123,7 +130,6 @@ const TodoModal = ({ type, modalOpen, setModalOpen, todo }) => {
                   type="text"
                   id="title"
                   value={title}
-                  // required
                   onChange={(e) => setTitle(e.target.value)}
                 />
               </label>
